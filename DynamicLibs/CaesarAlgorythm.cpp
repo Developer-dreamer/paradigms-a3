@@ -1,39 +1,54 @@
+#include <cstring>
 #include <iostream>
 
 extern "C"
 {
-    __attribute__((visibility("default"))) char* CaesarAlgorythmEncrypt(char* text, int key)
+    __attribute__((visibility("default"))) char* CaesarAlgorythmEncrypt(const char* text, const int key)
     {
-        for (int i = 0; text[i] != '\0'; i++)
+        // -------Used for debugging-------
+        // printf("Encrypting text: %s\n Key: %d\n", text, key);
+        // --------------------------------
+
+        char* encryptedText = new char[strlen(text) + 1];
+        strcpy(encryptedText, text);
+
+        for (int i = 0; encryptedText[i] != '\0'; i++)
         {
-            if (text[i] >= 'a' && text[i] <= 'z')
+            if (encryptedText[i] >= 'a' && encryptedText[i] <= 'z')
             {
-                text[i] = static_cast<char>((text[i] - 'a' + key) % 26 + 'a');
+                encryptedText[i] = static_cast<char>((encryptedText[i] - 'a' + key) % 26 + 'a');
             }
-            else if (text[i] >= 'A' && text[i] <= 'Z')
+            else if (encryptedText[i] >= 'A' && encryptedText[i] <= 'Z')
             {
-                text[i] = static_cast<char>((text[i] - 'A' + key) % 26 + 'A');
+                encryptedText[i] = static_cast<char>((encryptedText[i] - 'A' + key) % 26 + 'A');
             }
         }
 
-        return text;
+        return encryptedText;
     }
 
-    __attribute__((visibility("default"))) char* CaesarAlgorythmDecrypt(char* text, int key)
+    __attribute__((visibility("default"))) char* CaesarAlgorythmDecrypt(const char* text, const int key)
     {
-        for (int i = 0; text[i] != '\0'; i++)
+        // -------Used for debugging-------
+        // printf("Derypting text: %s\n Key: %d\n", text, key);
+        // --------------------------------
+
+        char* decryptedText = new char[strlen(text) + 1];
+        strcpy(decryptedText, text);
+
+        for (int i = 0; decryptedText[i] != '\0'; i++)
         {
-            if (text[i] >= 'a' && text[i] <= 'z')
+            if (decryptedText[i] >= 'a' && decryptedText[i] <= 'z')
             {
-                text[i] = static_cast<char>((text[i] - 'a' - key + 26) % 26 + 'a');
+                decryptedText[i] = static_cast<char>((decryptedText[i] - 'a' - key + 26) % 26 + 'a');
             }
-            else if (text[i] >= 'A' && text[i] <= 'Z')
+            else if (decryptedText[i] >= 'A' && decryptedText[i] <= 'Z')
             {
-                text[i] = static_cast<char>((text[i] - 'A' - key + 26) % 26 + 'A');
+                decryptedText[i] = static_cast<char>((decryptedText[i] - 'A' - key + 26) % 26 + 'A');
             }
         }
 
-        return text;
+        return decryptedText;
     }
 
 }
